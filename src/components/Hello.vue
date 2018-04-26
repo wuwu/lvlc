@@ -1,15 +1,22 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class="hello container is-fluid">
+    <h1 class="title is-2 has-text-weight-light">{{ msg }}</h1>
+      <p class="is-size-3 has-text-weight-semibold">Together with Alexander Strub and his Team at RBS Group we have turned the former executive offices into 30 spacious suites & rooms combining the convenience of high class offices with the smart look of modern design furniture and a cosy “soft shell” with a 360° curtain. The rooms offer total privacy, great comfort and a lot of content to be discovered.</p>
+      <test-rest></test-rest>
   </div>
 </template>
 
 <script>
+import TestRest from '@/components/TestRest.vue'
+
 export default {
   name: 'hello',
+  components: {
+    TestRest
+  },
   data () {
     return {
-      msg: 'Welcome to The Lovelace friends'
+      msg: 'Rooms & Suites'
     }
   }
 }
@@ -17,8 +24,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+    .hello{
+        padding-right: 10px;
+    }
 h1, h2 {
-  font-weight: normal;
+  margin-top: 30px;
 }
 
 ul {

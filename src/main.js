@@ -9,6 +9,9 @@ import store from './store'
 Vue.config.productionTip = false
 sync(store, router)
 
+// global styles
+require('@/assets/scss/main.scss')
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

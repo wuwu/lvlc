@@ -10,6 +10,7 @@ Vue.use(Vuex)
 const IS_LOADING = 'IS_LOADING'
 const SHOW_MODAL = 'SHOW_MODAL'
 const POSTS_LOADED = 'POSTS_LOADED'
+const MENU_LOADED = 'MENU_LOADED'
 const PAGES_LOADED = 'PAGES_LOADED'
 const SINGLE_POST_LOADED = 'SINGLE_POST_LOADED'
 const SHOW_SINGLE_POST = 'SHOW_SINGLE_POST'
@@ -23,7 +24,8 @@ const store = new Vuex.Store({
     postOnDisplay: '',
     test: 'wuwu',
     posts: [],
-    pages: []
+    pages: [],
+    menu: []
   },
   mutations: {
     [IS_LOADING] (state, payload) {
@@ -34,6 +36,9 @@ const store = new Vuex.Store({
     },
     [POSTS_LOADED] (state, payload) {
       state.posts = payload
+    },
+    [MENU_LOADED] (state, payload) {
+      state.menu = payload
     },
     [PAGES_LOADED] (state, payload) {
       state.pages = payload
@@ -74,6 +79,17 @@ const store = new Vuex.Store({
           commit('setLoading', false)
         })
     },
+    loadMenu ({state, commit}) {
+      commit('setLoading', true)
+      return api.getMenu()
+        .then((response) => {
+          commit(MENU_LOADED, response)
+          commit('setLoading', false)
+        }).catch((error) => {
+          console.log(error)
+          commit('setLoading', false)
+        })
+    },
     loadSinglePost ({state, commit}, id) {
       commit('setLoading', true)
       console.log('action load singlepost', id)
@@ -108,6 +124,12 @@ const store = new Vuex.Store({
     }
   },
   getters: {
+    getPosts: (state) => {
+      return state.posts
+    },
+    getMenu: (state) => {
+      return state.menu
+    },
     getPostById: (state, getters) => (id) => {
       return state.posts.find(post => post.id === id)
     },
@@ -126,6 +148,16 @@ const store = new Vuex.Store({
         console.log('data', data)
         return data
       }
+    },
+    get__match: state => (id) => {
+      const postObj = state.posts.find(post => post.id === id)
+      const post = {
+        title: postObj.title.rendered,
+        date: postObj.date,
+        content: postObj.content.rendered,
+        featuredImage: postObj.better_featured_image.source_url
+      }
+      return post
     }
   }
 })

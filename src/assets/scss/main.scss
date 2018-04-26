@@ -1,0 +1,35 @@
+@import './abstracts/mixins';
+@import './abstracts/settings';
+@import './materialdesignicons/materialdesignicons';
+@import '../../../node_modules/bulma/bulma';
+
+body{
+  width: 100vw;
+  min-height: 100vh;
+  background: $primary;
+  font-family: 'Open Sans', sans-serif;
+}
+#app{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.site-content{
+  flex-grow: 1;
+}
+.container {
+  max-width: 768px;
+}
+.columns{
+  padding-top: 1.5rem;
+}
+.main{
+  color: $black-bis;
+}
+h1{
+  font-size: 32px;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family: $family-heading;
+}
+

@@ -1,0 +1,114 @@
+/*------------------------------------*\
+    #MIXINS
+\*------------------------------------*/
+
+/** CSS Transition
+ *	Usage: @include transition(width,0.3s,ease-out);
+ */
+@mixin transition($transition-property, $transition-time, $method) {
+  -webkit-transition: $transition-property $transition-time $method;
+  -moz-transition: $transition-property $transition-time $method;
+  -ms-transition: $transition-property $transition-time $method;
+  -o-transition: $transition-property $transition-time $method;
+  transition: $transition-property $transition-time $method;
+}
+
+
+@mixin responsive-background($img) {
+  $suffix: str-slice($img, -4, -1);
+  $pre: str-slice($img, 0, -5);
+  background-image: url($img);
+  @media only screen and (min-resolution: 144dpi), screen and (min-width: 320px) {
+    background-image: url($pre+'@2x'+$suffix);
+  }
+  @media only screen and (min-resolution: 192dpi), screen and (min-width: 768px) {
+    background-image: url($pre+'@3x'+$suffix);
+  }
+  @media only screen and (min-width: 800px) {
+    background-image: url($pre+'@desktop'+$suffix);
+  }
+}
+
+
+/** Rem Unit font sizes with relative fallback http:/seesparkbox.com/foundry/scss_rem_mixin_now_with_a_better_fallback
+ *	Usage: @include font-size(1, large);
+ */
+@mixin font-size( $decimal-size, $keyword: null ) {
+  @if $keyword{ font-size: $keyword; }
+  @else { font-size: $decimal-size * $base-font-multiplier * 16px;}
+  font-size: $decimal-size * 1rem;
+}
+
+
+@mixin fontFace($family,$src,$style: normal,$weight: normal) {
+  @font-face {
+    font-family: $family;
+    src: url('#{$src}.woff') format('woff');
+    font-style: $style;
+    font-weight: $weight;
+  }
+}
+
+@mixin app-padding() {
+  padding-left: $padding-left-mobile;
+  padding-right: $padding-left-mobile;
+  @include breakpoint(medium){
+    padding-left: $padding-left-desktop;
+    padding-right: $padding-left-desktop;
+  }}
+
+  @mixin from($device) {
+     @media screen and (min-width: $device){
+      @content;
+    }
+  }
+  @mixin until($device) {
+     @media screen and (max-width: $device - 1px){
+      @content;
+    }
+  }
+  @mixin mobile {
+     @media screen and (max-width: $tablet - 1px){
+      @content;
+    }
+  }
+  @mixin tablet {
+     @media screen and (min-width: $tablet), print{
+      @content;
+    }
+  }
+  @mixin tablet-only {
+     @media screen and (min-width: $tablet) and (max-width: $desktop - 1px){
+      @content;
+    }
+  }
+  @mixin touch {
+     @media screen and (max-width: $desktop - 1px){
+      @content;
+    }
+  }
+  @mixin desktop {
+     @media screen and (min-width: $desktop){
+      @content;
+    }
+  }
+  @mixin desktop-only {
+     @media screen and (min-width: $desktop) and (max-width: $widescreen - 1px){
+      @content;
+    }
+  }
+  @mixin widescreen {
+     @media screen and (min-width: $widescreen){
+      @content;
+    }
+  }
+  @mixin widescreen-only {
+     @media screen and (min-width: $widescreen) and (max-width: $fullhd - 1px){
+      @content;
+    }
+  }
+  @mixin fullhd {
+     @media screen and (min-width: $fullhd){
+      @content;
+    }
+  }

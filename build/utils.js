@@ -21,7 +21,15 @@ exports.cssLoaders = function (options) {
       sourceMap: options.sourceMap
     }
   }
-
+  // This makes my vars and mixins avail throughout my app at a global level
+  let scssOptions = {
+    includePaths: [
+      './src/assets/scss'
+    ],
+    data:
+    '@import "./src/assets/scss/abstracts/settings";' +
+    '@import "./src/assets/scss/abstracts/mixins";'
+  }
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
     const loaders = [cssLoader]
@@ -52,7 +60,7 @@ exports.cssLoaders = function (options) {
     postcss: generateLoaders(),
     less: generateLoaders('less'),
     sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
+    scss: generateLoaders('sass', scssOptions),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }
